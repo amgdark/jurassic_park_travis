@@ -1,7 +1,20 @@
 from django.shortcuts import render, redirect
-from .models import Periodo
+from .models import Periodo, Dinosaurio
 from .forms import PeriodoForm, DinoForm
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView
 
+
+
+
+class NuevoDino(CreateView):
+    model = Dinosaurio
+    form_class = DinoForm
+    success_url = reverse_lazy('lista_dinos')
+
+class ListaDino(ListView):
+    model = Dinosaurio
 
 def agregar_dino(request):
     context = {'app':'Dinosaurio','nuevo':True}

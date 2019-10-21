@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Periodos</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block titulo %}  
+    Periodos
+{% endblock titulo %}
+
+{% block contenido %}
     <h1>Periodos</h1>
-    <h1>{{nombre}}</h1>
-    <table>
-        <thead>
+    <a href="{% url "agregar_periodo" %}" class="btn btn-primary">Agregar periodo</a>
+    <table class="table table-striped">
+        <thead class="thead-dark">
             <th>ID Periodo</th>
             <th>Nombre del periodo</th>
             <th>Descripción</th>
@@ -23,12 +21,11 @@
                     <td>{{periodo.nombre}}</td>
                     <td>{{periodo.descripcion}}</td>
                     <td>
-                        <a href="{% url "eliminar_periodo" periodo.id %}">Eliminar</a>
-                        <a href="{% url "editar_periodo" periodo.id %}">Editar</a>
+                        <a href="{% url "eliminar_periodo" periodo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="{% url "editar_periodo" periodo.id %}" class="btn btn-success btn-sm">Editar</a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+{% endblock contenido %}
