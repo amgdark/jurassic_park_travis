@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Periodo, Dinosaurio
 from .forms import PeriodoForm, DinoForm
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 
@@ -15,6 +15,20 @@ class NuevoDino(CreateView):
 
 class ListaDino(ListView):
     model = Dinosaurio
+
+
+class EliminaDinos(DeleteView):
+    model = Dinosaurio
+    success_url = reverse_lazy('lista_dinos')
+
+
+class ActualizaDinos(UpdateView):
+    form_class = DinoForm
+    model = Dinosaurio
+    success_url = reverse_lazy('lista_dinos')
+    template_name = 'dinosaurios/dinosaurio_edit.html'
+
+
 
 def agregar_dino(request):
     context = {'app':'Dinosaurio','nuevo':True}
