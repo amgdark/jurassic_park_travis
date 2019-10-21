@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block titulo %}  
+    Dinosaurios
+{% endblock titulo %}
+
+{% block contenido %}
+    <h1>Lista Dinosaurios</h1>
+    <a href="{% url "agregar_dino" %}" class="btn btn-primary">Agregar dinosaurio</a>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <th>ID Dinosaurio</th>
+            <th>Nombre del dinosaurio</th>
+            <th>Altura</th>
+            <th>Periodo</th>
+            <th>Imagen</th>
+            <th>Opciones</th>
+        </thead>
+        <tbody>
+            {% for dino in object_list %}
+                <tr>
+                    <td>{{dino.id}}</td>
+                    <td>{{dino.nombre}}</td>
+                    <td>{{dino.altura}}</td>
+                    <td>{{dino.periodo}}</td>
+                    <td><img src="{{MEDIA_URL}}{{dino.imagen}}" width="60px" alt="{{dino.nombre}}"></td>
+                    <td>
+                        <a href="" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="" class="btn btn-success btn-sm">Editar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock contenido %}
