@@ -9,7 +9,6 @@ class Periodo(models.Model):
     
 
 class Dinosaurio(models.Model):
-
     nombre = models.CharField(max_length=100)
     altura = models.DecimalField(max_digits=5, decimal_places=2)
     periodo = models.ForeignKey(Periodo, verbose_name="Periodo", 
