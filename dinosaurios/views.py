@@ -4,17 +4,18 @@ from .forms import PeriodoForm, DinoForm
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
 from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 
-
-class NuevoDino(CreateView):
+class NuevoDino(LoginRequiredMixin, CreateView):
     model = Dinosaurio
     form_class = DinoForm
     success_url = reverse_lazy('lista_dinos')
 
-class ListaDino(ListView):
+class ListaDino(PermissionRequiredMixin, ListView):
     model = Dinosaurio
+    permission_required = 'dinosaurios.view_dinosaurio'
 
 
 class EliminaDinos(DeleteView):
