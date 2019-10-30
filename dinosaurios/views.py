@@ -8,14 +8,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 
 
 
-class NuevoDino(LoginRequiredMixin, CreateView):
+# class NuevoDino(LoginRequiredMixin, CreateView):
+class NuevoDino(CreateView):
     model = Dinosaurio
     form_class = DinoForm
     success_url = reverse_lazy('lista_dinos')
 
-class ListaDino(PermissionRequiredMixin, ListView):
+# class ListaDino(PermissionRequiredMixin, ListView):
+class ListaDino(ListView):
     model = Dinosaurio
-    permission_required = 'dinosaurios.view_dinosaurio'
+    # permission_required = 'dinosaurios.view_dinosaurio'
 
 
 class EliminaDinos(DeleteView):
