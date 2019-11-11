@@ -4,9 +4,7 @@ from unittest import TestCase
 
 @given(u'Que ingreso al formulario para llenar los datos del dinosaurios')
 def step_impl(context):
-    driver = webdriver.Firefox()
-    driver.get('http://192.168.33.10:8000/periodo/nuevo/dino')
-    context.driver = driver
+    context.driver.get('http://192.168.33.10:8000/periodo/nuevo/dino')
 
 
 @given(u'escribo los datos: nombre "{nombre}", altura: "{altura}", periodo: "{periodo}", imagen: "{imagen}"')
