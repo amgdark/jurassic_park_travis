@@ -1,3 +1,5 @@
 django
 Pillow
 mysqlclient
+flake8
+autopep8
