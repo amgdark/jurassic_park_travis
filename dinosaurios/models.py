@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 class Periodo(models.Model):
     nombre = models.CharField(max_length=100)
@@ -17,3 +20,11 @@ class Dinosaurio(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class VotacionDino(models.Model):
+    dinosaurio = models.ForeignKey(Dinosaurio, verbose_name='Dinosaurio', on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, verbose_name='Usuario', on_delete = models.CASCADE)
+    calificacion = models.IntegerField("Calificación", default=0, 
+        validators=[MaxValueValidator(5,'El valor máximo permitido es 5'), MinValueValidator(1, 'El valor mínimo es 1')])
+    rollo = models.TextField("Reseña")
+

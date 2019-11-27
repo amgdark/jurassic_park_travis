@@ -29,7 +29,7 @@ class UserForm(ModelForm):
 
     def clean_password(self, *args, **kwargs):
         if self.data['password'] != self.data['password_re']:
-            raise ValidationError('Las contraseñas no son iguales')
+            raise ValidationError('Las contraseñas no son iguales', code='passwords_not_equals')
         return self.data['password']
 
 class LoginForm(AuthenticationForm):

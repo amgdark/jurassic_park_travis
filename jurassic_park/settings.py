@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dinosaurios',
     'usuarios',
-]
+    'behave_django'
+] 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

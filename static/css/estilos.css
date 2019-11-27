@@ -1,0 +1,13 @@
+.voto-img{
+    width: 40px;
+    float: left;
+    margin-right: 3px;
+    display: block;
+}
+
+.empty{
+    background-image: url('../images/star-empty.svg');
+}
+.empty:hover{
+    background-image: url('../images/star-filled.svg');
+}

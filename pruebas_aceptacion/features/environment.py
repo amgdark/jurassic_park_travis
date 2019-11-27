@@ -2,14 +2,16 @@
 # CONTAINS: Browser fixture setup and teardown
 from behave import fixture, use_fixture
 from selenium.webdriver import Firefox
+from unittest import TestCase
+
 
 @fixture
 def browser_firefox(context):
-    # -- BEHAVE-FIXTURE: Similar to @contextlib.contextmanager
     context.driver = Firefox()
-    yield context.driver
-    # -- CLEANUP-FIXTURE PART:
-    context.driver.quit()
+    context.url = 'http://192.168.33.10:8000/'
+    context.test = TestCase()
+    # yield context.driver
+    # context.driver.quit()
 
 def before_all(context):
     use_fixture(browser_firefox, context)

@@ -3,9 +3,9 @@ from .models import Periodo, Dinosaurio
 from .forms import PeriodoForm, DinoForm
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-
+from django.db.models import Count
 
 
 # class NuevoDino(LoginRequiredMixin, CreateView):
@@ -31,6 +31,29 @@ class ActualizaDinos(UpdateView):
     success_url = reverse_lazy('lista_dinos')
     template_name = 'dinosaurios/dinosaurio_edit.html'
 
+
+class ListaDinoVotacion(ListView):
+    model = Dinosaurio
+    template_name = 'dinosaurios/dinosaurio_lista_votacion.html'
+    def get(self, request, *args, **kwargs):
+        dinos = Dinosaurio.objects.all()
+        dinos_votos = []
+        for dino in dinos:
+            votos = {5:0, 4:0, 3:0, 2:0, 1:0, 'total':0, 'promedio':0}
+            votos_dinos = dino.votaciondino_set.all().values('calificacion').annotate(cuantos=Count('calificacion'))
+            if votos_dinos:
+                sumatoria = 0
+                for dato in votos_dinos:
+                    votos[dato['calificacion']] = dato['cuantos']
+                    votos['total'] += dato['cuantos']
+                    sumatoria += dato['calificacion'] * dato['cuantos']
+                votos['promedio'] = sumatoria / votos['total']
+            
+            dinos_votos.append({'dino':dino, 'votos':votos})  
+        self.object_list = dinos_votos
+        context = self.get_context_data()
+    
+        return self.render_to_response(context)
 
 
 def agregar_dino(request):
@@ -78,3 +101,22 @@ def lista_periodo(request):
     context = {'periodos':periodos, 'nombre':nombre}
 
     return render(request, 'periodos.html',context)
+
+
+class Grafica(TemplateView):
+    template_name = 'dinosaurios/grafica.html'
+    dinos_periodo = Dinosaurio.objects.all().values('periodo').annotate(cuantos=Count('periodo'))
+    periodos = Periodo.objects.all()
+
+    datos = []
+    for periodo in periodos:
+        cuantos = 0
+        for dp in dinos_periodo: 
+            if dp['periodo'] == periodo.id:
+                cuantos = dp['cuantos']
+                break
+        datos.append({'name':periodo.nombre, 'data':[cuantos]})
+
+    extra_context = {'datos': datos}
+    
+
