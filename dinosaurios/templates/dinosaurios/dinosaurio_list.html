@@ -5,6 +5,7 @@
 {% endblock titulo %}
 
 {% block contenido %}
+
     <h3>Lista dinosaurios</h3>
     <a href="{% url "nuevo_dino" %}" class="btn btn-primary bt-sm">Agregar dinosaurio</a>
     <table class="table table-striped mt-3">
@@ -23,7 +24,7 @@
                     <td>{{dino.nombre}}</td>
                     <td>{{dino.altura}}</td>
                     <td>{{dino.periodo}}</td>
-                    <td><img src="{{MEDIA_URL}}{{dino.imagen}}" width="60px" alt="{{dino.nombre}}"></td>
+                    <td><img src="{{MEDIA_URL}}{{dino.imagen}}" class="img-dinos" width="40px"alt="{{dino.nombre}}"></td>
                     <td>
                         <a href="{% url "eliminar_dinos" dino.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                         <a href="{% url "editar_dinos" dino.id %}" class="btn btn-success btn-sm">Editar</a>

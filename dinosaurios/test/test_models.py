@@ -1,6 +1,6 @@
 from django.test import TestCase
 from dinosaurios.models import Dinosaurio, Periodo, VotacionDino
-from dinosaurios.tests.test_views import TestViews
+from dinosaurios.test.test_views import TestViews
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 

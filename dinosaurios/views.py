@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Count
+from django_weasyprint import WeasyTemplateResponseMixin
+from django.conf import settings
 
 
 # class NuevoDino(LoginRequiredMixin, CreateView):
@@ -32,7 +34,7 @@ class ActualizaDinos(UpdateView):
     template_name = 'dinosaurios/dinosaurio_edit.html'
 
 
-class ListaDinoVotacion(ListView):
+class ListaDinoVotacion(LoginRequiredMixin, ListView):
     model = Dinosaurio
     template_name = 'dinosaurios/dinosaurio_lista_votacion.html'
     def get(self, request, *args, **kwargs):
@@ -55,6 +57,22 @@ class ListaDinoVotacion(ListView):
     
         return self.render_to_response(context)
 
+class VistaPdf(ListView):
+    model = Dinosaurio
+    template_name = 'dinosaurios/dinosaurio_pdf.html'
+    suma = 0
+    for dino in Dinosaurio.objects.all():
+        suma += dino.altura
+    
+    extra_context = {"suma":suma}
+
+class ListaDinoPdf(WeasyTemplateResponseMixin, VistaPdf):
+    pdf_stylesheets = [
+        settings.STATICFILES_DIRS[0] + 'css/bootstrap.min.css',
+        settings.STATICFILES_DIRS[0] + 'css/estilos.css',
+    ]
+    pdf_attachment = False
+    pdf_filename = 'lista_dinos.pdf'
 
 def agregar_dino(request):
     context = {'app':'Dinosaurio','nuevo':True}
