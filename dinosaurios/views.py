@@ -67,8 +67,7 @@ class VistaPdf(ListView):
             suma += dino.altura
         self.extra_context = {'suma':suma}
         
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context)
+        return super().get(request, *args, **kwargs)
 
 
 class ListaDinoPdf(WeasyTemplateResponseMixin, VistaPdf):
