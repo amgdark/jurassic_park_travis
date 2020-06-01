@@ -60,11 +60,16 @@ class ListaDinoVotacion(LoginRequiredMixin, ListView):
 class VistaPdf(ListView):
     model = Dinosaurio
     template_name = 'dinosaurios/dinosaurio_pdf.html'
-    suma = 0
-    for dino in Dinosaurio.objects.all():
-        suma += dino.altura
     
-    extra_context = {"suma":suma}
+    def get(self, request, *args, **kwargs):
+        suma = 0
+        for dino in Dinosaurio.objects.all():
+            suma += dino.altura
+        self.extra_context = {'suma':suma}
+        
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+
 
 class ListaDinoPdf(WeasyTemplateResponseMixin, VistaPdf):
     pdf_stylesheets = [
@@ -136,5 +141,3 @@ class Grafica(TemplateView):
         datos.append({'name':periodo.nombre, 'data':[cuantos]})
 
     extra_context = {'datos': datos}
-    
-
