@@ -128,16 +128,20 @@ def lista_periodo(request):
 
 class Grafica(TemplateView):
     template_name = 'dinosaurios/grafica.html'
-    dinos_periodo = Dinosaurio.objects.all().values('periodo').annotate(cuantos=Count('periodo'))
-    periodos = Periodo.objects.all()
-
-    datos = []
-    for periodo in periodos:
-        cuantos = 0
-        for dp in dinos_periodo: 
-            if dp['periodo'] == periodo.id:
-                cuantos = dp['cuantos']
-                break
-        datos.append({'name':periodo.nombre, 'data':[cuantos]})
-
-    extra_context = {'datos': datos}
+    
+    def get(self, request, *args, **kwargs):
+        dinos_periodo = Dinosaurio.objects.all().values('periodo').annotate(cuantos=Count('periodo'))
+        periodos = Periodo.objects.all()
+    
+        datos = []
+        for periodo in periodos:
+            cuantos = 0
+            for dp in dinos_periodo: 
+                if dp['periodo'] == periodo.id:
+                    cuantos = dp['cuantos']
+                    break
+            datos.append({'name':periodo.nombre, 'data':[cuantos]})
+    
+        self.extra_context = {'datos': datos}
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
