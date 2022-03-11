@@ -22,6 +22,6 @@ before_script:
 script: 
   - python manage.py test dinosaurios
   - coverage run --branch --source='.' --omit=*test*,*migrations*,*__init*,*settings*,*apps*,*wsgi*,*admin.py,*asgi.py,manage.py,*urls.py manage.py test
-  - coverage report -m --fail-under 80
+  - coverage report -m --fail-under 90
 notifications:
 email: false
