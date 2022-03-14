@@ -4,6 +4,6 @@ mysqlclient
 flake8
 autopep8
 behave-django
-django-weasyprint==0.5.0
+django-weasyprint
 selenium
 coverage
