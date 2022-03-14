@@ -73,10 +73,10 @@ class VistaPdf(ListView):
 
 class ListaDinoPdf(WeasyTemplateResponseMixin, VistaPdf):
     pdf_stylesheets = [
-        os.path.join(settings.STATICFILES_DIRS[0], 'css/bootstrap.min.css'),
-        os.path.join(settings.STATICFILES_DIRS[0], 'css/estilos.css'),
-        # settings.STATICFILES_DIRS[0] + 'css/bootstrap.min.css',
-        # settings.STATICFILES_DIRS[0] + 'css/estilos.css',
+        # os.path.join(settings.STATICFILES_DIRS[0], 'css/bootstrap.min.css'),
+        # os.path.join(settings.STATICFILES_DIRS[0], 'css/estilos.css'),
+        settings.STATICFILES_DIRS[0] + 'css/bootstrap.min.css',
+        settings.STATICFILES_DIRS[0] + 'css/estilos.css',
     ]
     pdf_attachment = False
     pdf_filename = 'lista_dinos.pdf'
